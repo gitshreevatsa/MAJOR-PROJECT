@@ -1,0 +1,10 @@
+const router = require("express").Router();
+
+const { uploadController } = require("../controller/uploadFile");
+const { retrieveAllFiles } = require("../controller/retreiveFile");
+const { getNonce, verifySignature, isLoggedin } = require("../controller/auth");
+
+router.post("/upload", isLoggedin, uploadController);
+router.get("/retrieve", isLoggedin, retrieveAllFiles);
+router.get("/nonce", getNonce);
+router.post("/verify", verifySignature);
