@@ -24,10 +24,14 @@ const verifySignature = async (req, res) => {
 };
 
 const serailizeUser = async (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  const key = process.env.JWT_SECRET;
-  const { address } = jwt.verify(token, key);
-  req.user = address;
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const key = process.env.JWT_SECRET;
+    const { address } = jwt.verify(token, key);
+    req.user = address;
+  } catch {
+    req.user = null;
+  }
 };
 
 const isLoggedin = async () => {
@@ -39,8 +43,8 @@ const isLoggedin = async () => {
 };
 
 module.exports = {
-    getNonce,
-    verifySignature,
-    serailizeUser,
-    isLoggedin,
-    };
+  getNonce,
+  verifySignature,
+  serailizeUser,
+  isLoggedin,
+};

@@ -1,6 +1,9 @@
 const { stringToUint32LE, uint32ToHexString } = require("./helper");
 
 const encryptXTEA = (plaintext, key) => {
+  console.log(key.length);
+  key = "0123456789ABCDEF";
+  plaintext = ""
   if (key.length !== 16) {
     throw new Error("Invalid key length. XTEA requires a 128-bit key.");
   }
