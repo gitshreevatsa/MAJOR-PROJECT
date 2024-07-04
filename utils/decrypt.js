@@ -1,6 +1,6 @@
 const { stringToUint32LE, uint32ToHexString } = require("./helper");
 
-function decryptXTEA(ciphertext, key) {
+function ciphertextConverter(ciphertext, key) {
   if (key.length !== 16) {
     throw new Error("Invalid key length. XTEA requires a 128-bit key.");
   }
@@ -24,4 +24,4 @@ function decryptXTEA(ciphertext, key) {
   return uint32ToHexString(v0) + uint32ToHexString(v1);
 }
 
-module.exports = { decryptXTEA };
+module.exports = { ciphertextConverter };

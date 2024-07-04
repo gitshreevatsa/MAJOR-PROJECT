@@ -1,18 +1,23 @@
 const fs = require("fs");
 
-const downloadFile = async(cid, path) => {
-  fetch(`https://gateway.lighthouse.storage/ipfs/${cid}`)
-    .then((response) => {
-      if (response.ok) return response.buffer();
-      throw new Error("Network response was not ok.");
+const downloadFile = async (cid, path) => {
+  console.log("Downloading file", cid);
+  if (!fs.existsSync(path)) {
+    fs.mkdirSync(path, { recursive: true });
+  }
+  await fetch(`https://gateway.lighthouse.storage/ipfs/${cid}`)
+    .then(async (response) => {
+      console.log(
+        await response,
+        // await response.text().then((data) => {
+        //   const buffer = Buffer.from(data, "utf8");
+        //   const filePath = `${path}/clown.jpg`;
+        //   fs.writeFileSync(filePath, buffer);
+        // })
+      );
     })
-    .then((buffer) => {
-      fs.writeFile(path, buffer, () => {
-        console.log(`File saved to ${path}`);
-      });
-    })
-    .catch((error) => {
-      console.error("Failed to save the file:", error);
+    .catch((err) => {
+      console.error(err);
     });
 };
 
